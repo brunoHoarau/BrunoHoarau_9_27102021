@@ -24,7 +24,7 @@ export default class {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} /></div>`)
-    $('#modaleFile').modal('show')
+    typeof $('#modaleFile').modal === 'function'? $('#modaleFile').modal('show') : ""
   }
 
   // not need to cover this function by tests
@@ -47,7 +47,7 @@ export default class {
             } catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
-              console.log(e,'for',doc.data())
+              console.log(e,'for',doc.data().date)
               return {
                 ...doc.data(),
                 date: doc.data().date,

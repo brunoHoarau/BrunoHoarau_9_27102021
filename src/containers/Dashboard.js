@@ -26,6 +26,8 @@ export const filteredBills = (data, status) => {
     }) : []
 }
 
+
+const regexDate = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 export const card = (bill) => {
   const firstAndLastNames = bill.email.split('@')[0]
   const firstName = firstAndLastNames.includes('.') ?
@@ -44,7 +46,7 @@ export const card = (bill) => {
         <span> ${bill.amount} € </span>
       </div>
       <div class='date-type-container'>
-        <span> ${formatDate(bill.date)} </span>
+        <span> ${(bill.date.match(regexDate) ? formatDate(bill.date) : '')} </span>
         <span> ${bill.type} </span>
       </div>
     </div>
@@ -144,8 +146,9 @@ export default class {
         .html("")
       this.counter ++
     }
-
-    bills.forEach(bill => {
+    // bug hunter - Select many ticket of many list
+    const currentBills = filteredBills(bills, getStatus(this.index));
+		currentBills.forEach((bill) => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 

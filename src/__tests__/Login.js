@@ -105,7 +105,7 @@ describe("Given that I am a user on login page", () => {
     })  
 
     test("It should renders Bills page", () => {
-      expect(screen.getAllByText('Mes notes de frais')).toBeTruthy()
+      expect(screen.getByText('Mes notes de frais')).toBeTruthy()
     })
 
   })
@@ -181,7 +181,7 @@ describe("Given that I am a user on login page", () => {
         writable: true
       })
 
-      // we have to mock navigation to test it
+      // mock navigation to test it
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
