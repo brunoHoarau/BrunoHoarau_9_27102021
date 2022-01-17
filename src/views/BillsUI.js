@@ -20,7 +20,6 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  console.log(data);
   const sortData = data.sort( (a,b) => {
     a = Date.parse(a.date);
     b = Date.parse(b.date);
