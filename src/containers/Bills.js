@@ -24,10 +24,11 @@ export default class {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} /></div>`)
-    typeof $('#modaleFile').modal === 'function'? $('#modaleFile').modal('show') : ""
+    $('#modaleFile').modal('show')
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   getBills = () => {
     const userEmail = localStorage.getItem('user') ?
       JSON.parse(localStorage.getItem('user')).email : ""
@@ -47,7 +48,7 @@ export default class {
             } catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
-              console.log(e,'for',doc.data().date)
+              // console.log(e,'for',doc.data().date)
               return {
                 ...doc.data(),
                 date: doc.data().date,

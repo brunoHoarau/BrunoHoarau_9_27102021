@@ -13,6 +13,7 @@ import firebase from "../__mocks__/firebase"
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", () => {
+      // Environnement 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
@@ -22,6 +23,7 @@ describe("Given I am connected as an employee", () => {
      jest.fn(Firestore);
      Firestore.bills = () => { return {get: jest.fn().mockResolvedValue()}}
 
+     // Location
      Object.defineProperty(window, 'location', {
       value:{
         hash: ROUTES_PATH['Bills']
@@ -43,20 +45,6 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
   })
-  describe('When I am on Bills Page but it is loading', () => {
-    test('Then, Loading page should be rendered', () => {
-        const html = BillsUI({ loading: true })
-        document.body.innerHTML = html
-        expect(screen.getAllByText('Loading...')).toBeTruthy()
-    })
-  })
-  describe('When I am on Bills Page but back-end send an error message', () => {
-    test('Then, Error page should be rendered', () => {
-        const html = BillsUI({ error: true })
-        document.body.innerHTML = html
-        expect(screen.getAllByText('Erreur')).toBeTruthy()
-    })   
-  })
 
   // Integration test
 
@@ -76,10 +64,8 @@ describe("Given I am connected as an employee", () => {
       expect(billsFirebase.data.length).toBe(4);
 
     });
-
-
-
     test("fetches bills from an API and fails with 404 message error", async () => {
+
       firebase.get.mockImplementationOnce(() =>
         Promise.reject(new Error("Erreur 404"))
       );
@@ -107,7 +93,7 @@ describe("Given I am connected as an employee", () => {
       document.body.innerHTML = html;
 
       const message = screen.getByText(/Erreur 500/);
-      // wait for the error message 400
+      // wait for the error message 500
       expect(message).toBeTruthy();
     });
   });
@@ -133,7 +119,7 @@ describe("Given I am connected as an employee", () => {
       const html = BillsUI({
         data: [],
         loading: false,
-        error: 'Whoops!'
+        error: 'Erreur!'
       });
       document.body.innerHTML = html;
 
@@ -145,6 +131,7 @@ describe("Given I am connected as an employee", () => {
   // handleClickNewBill for container/Bills.js
   describe('Given I am connected as Employee and I am on Bills page', () => {
     describe('When I click on the New Bill button', () => {
+  
       test('Then, it should render NewBill page', () => {
          const onNavigate = (pathname) => {
            document.body.innerHTML = ROUTES ({pathname})
@@ -182,15 +169,15 @@ describe("Given I am connected as an employee", () => {
         fireEvent.click(billBtn);
         expect ( handleClickNewBill).toHaveBeenCalled(); 
         // screen should show Envoyer une note de frais
-        // const billText = screen.getByText('Envoyer une note de frais')
-        // expect(billText).toBeTruthy();
+        const billText = screen.getByText('Envoyer une note de frais')
+        expect(billText).toBeTruthy();
       });
     });
   });
 
   // handleClickIconEye for container/Bills.js
   describe('When I click on the icon eye', () => {
-    test('A modal should open', () => {
+    test('The modal open', () => {
       // build user interface
       const html = BillsUI({
         data: bills

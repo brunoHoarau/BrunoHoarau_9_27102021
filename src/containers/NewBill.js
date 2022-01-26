@@ -20,6 +20,8 @@ export default class NewBill {
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const fileType = fileName.split('.').pop();
+
+    // Repair Bug type file
     (fileType == 'jpg' || fileType == 'jpeg' || fileType == 'png' ?
     this.firestore
       .storage

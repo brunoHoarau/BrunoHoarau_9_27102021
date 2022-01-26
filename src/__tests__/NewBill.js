@@ -71,7 +71,7 @@ describe("Given I am connected as an employee", () => {
 //Integration test
 describe("Given I am a user connected as Employee", () => {
   describe("When I create a new bill", () => {
-    test("form submition", async () => {
+    test("I submit a new bill", async () => {
       const bill = {
         email:'johndoe@email.com',
         type: "Hôtel et logement",
